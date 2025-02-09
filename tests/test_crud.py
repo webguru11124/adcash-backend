@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -47,6 +51,27 @@ def test_update_campaign_status(db):
     campaign = crud.update_campaign_status(db, campaign_id=1, is_running=False)
     assert campaign.is_running == False
 
-def test_filter_campaigns(db):
+def test_filter_campaigns_by_title(db):
+    campaigns = crud.filter_campaigns(db, title="Test")
+    assert len(campaigns) > 0
+    for campaign in campaigns:
+        assert "Test" in campaign.title
+
+def test_filter_campaigns_by_landing_page_url(db):
+    campaigns = crud.filter_campaigns(db, landing_page_url="example.com")
+    assert len(campaigns) > 0
+    for campaign in campaigns:
+        assert "example.com" in campaign.landing_page_url
+
+def test_filter_campaigns_by_is_running(db):
+    campaigns = crud.filter_campaigns(db, is_running=False)
+    assert len(campaigns) > 0
+    for campaign in campaigns:
+        assert campaign.is_running == False
+
+def test_filter_campaigns_combined(db):
     campaigns = crud.filter_campaigns(db, title="Test", is_running=False)
     assert len(campaigns) > 0
+    for campaign in campaigns:
+        assert "Test" in campaign.title
+        assert campaign.is_running == False

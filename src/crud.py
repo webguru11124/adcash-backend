@@ -18,7 +18,7 @@ def create_campaign(db: Session, campaign: schemas.CampaignCreate):
     db.commit()
     db.refresh(db_campaign)
     for payout in campaign.payouts:
-        db_payout = models.Payout(**payout.dict(), campaign_id=db_campaign.id)
+        db_payout = models.Payout(**payout.model_dump(), campaign_id=db_campaign.id)
         db.add(db_payout)
     db.commit()
     return db_campaign

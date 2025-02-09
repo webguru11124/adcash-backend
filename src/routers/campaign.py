@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from .. import crud, models, schemas
@@ -43,6 +43,15 @@ def update_campaign_status(campaign_id: int, is_running: bool, db: Session = Dep
     return db_campaign
 
 @router.get("/filter", response_model=List[schemas.Campaign])
-def filter_campaigns(title: Optional[str] = None, landing_page_url: Optional[str] = None, is_running: Optional[bool] = None, skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    campaigns = crud.filter_campaigns(db, title=title, landing_page_url=landing_page_url, is_running=is_running, skip=skip, limit=limit)
+def filter_campaigns(
+    title: Optional[str] = Query(None),
+    landing_page_url: Optional[str] = Query(None),
+    is_running: Optional[bool] = Query(None),
+    skip: int = Query(0),
+    limit: int = Query(10),
+    db: Session = Depends(get_db)
+):
+    campaigns = crud.filter_campaigns(
+        db, title=title, landing_page_url=landing_page_url, is_running=is_running, skip=skip, limit=limit
+    )
     return campaigns

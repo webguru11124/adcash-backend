@@ -1,7 +1,15 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from fastapi.testclient import TestClient
 from src.main import app
 
 client = TestClient(app)
+
+def setup_module(module):
+    from src.database import Base, engine
+    Base.metadata.create_all(bind=engine)
 
 def test_create_campaign():
     response = client.post(

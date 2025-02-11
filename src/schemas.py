@@ -29,3 +29,6 @@ class Campaign(CampaignBase):
 
     class Config:
         orm_mode = True
+
+class CampaignStatusUpdate(BaseModel):
+    is_running: bool

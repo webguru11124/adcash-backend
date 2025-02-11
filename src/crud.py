@@ -40,3 +40,9 @@ def filter_campaigns(db: Session, title: Optional[str] = None, landing_page_url:
     if is_running is not None:
         query = query.filter(models.Campaign.is_running == is_running)
     return query.offset(skip).limit(limit).all()
+
+def delete_campaign(db: Session, campaign_id: int):
+    db_campaign = db.query(models.Campaign).filter(models.Campaign.id == campaign_id).first()
+    if db_campaign:
+        db.delete(db_campaign)
+        db.commit()

@@ -9,7 +9,7 @@
       "portMappings": [
         {
           "containerPort": 8000,
-          "protocol": "tcp"
+          "hostPort": 8000
         }
       ],
       "environment": [
@@ -17,18 +17,12 @@
           "name": "DATABASE_URL",
           "value": "sqlite:///./test.db"
         }
-      ],
-      "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "/ecs/adcash-backend",
-          "awslogs-region": "us-east-1",
-          "awslogs-stream-prefix": "ecs"
-        }
-      }
+      ]
     }
   ],
-  "requiresCompatibilities": ["FARGATE"],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
   "cpu": "256",
   "memory": "512",
   "executionRoleArn": "arn:aws:iam::911167891623:role/ecsTaskExecutionRole"

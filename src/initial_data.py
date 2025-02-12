@@ -1,6 +1,10 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from sqlalchemy.orm import Session
-from .database import SessionLocal, engine
-from . import models, schemas, crud
+from src.database import SessionLocal, engine
+from src import models, schemas, crud
 
 def init_db(db: Session):
     # Create initial test data

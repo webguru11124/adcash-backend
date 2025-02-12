@@ -96,6 +96,31 @@ curl -X 'GET' \
 4. **Access the frontend:**
    Open your browser and navigate to `http://localhost:3000` to see the application.
 
+## Deployment to Amazon ECS
+
+### Prerequisites
+
+- AWS CLI configured with your credentials
+- Amazon ECR repository created
+- Amazon ECS cluster and service created
+- ECS task definition JSON file created and stored in the repository
+
+### Steps
+
+1. **Set up GitHub Secrets:**
+   Store your AWS credentials in GitHub Actions secrets:
+   - `AWS_ACCESS_KEY_ID`
+   - `AWS_SECRET_ACCESS_KEY`
+
+2. **Update the GitHub Actions workflow:**
+   Ensure the `.github/workflows/aws.yml` file is configured with your environment variables.
+
+3. **Push to the main branch:**
+   When you push changes to the `main` branch, the GitHub Actions workflow will automatically build and deploy your application to Amazon ECS.
+
+4. **Monitor the deployment:**
+   You can monitor the deployment process in the GitHub Actions tab of your repository.
+
 ## Contributing
 
 Feel free to submit issues and pull requests for improvements and bug fixes.
